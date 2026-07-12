@@ -14,6 +14,7 @@
 
 static void adc_init(void)
 {
+	// ADC2 (PC2) - Joystick X-Achse (VRx laut Verkabelung)
 	ADMUX = (1 << REFS0) | (1 << MUX1);
 	ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 }
@@ -53,6 +54,7 @@ int main(void)
 				{
 					game_enemy_turn();
 				}
+				game_print_status();
 				action_executed = 1;
 				debounce_counter = 0;
 			}
