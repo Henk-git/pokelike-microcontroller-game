@@ -34,7 +34,7 @@ void uart_println(const char *s)
 	uart_putc('\n');
 }
 
-// Zahl als String senden (bis zu 3-stellig)
+// Zahl als String senden (bis zu 4-stellig)
 void uart_print_int(int16_t n)
 {
 	if (n < 0)
@@ -42,8 +42,10 @@ void uart_print_int(int16_t n)
 		uart_putc('-');
 		n = -n;
 	}
+	if (n >= 1000)
+		uart_putc('0' + n / 1000);
 	if (n >= 100)
-		uart_putc('0' + n / 100);
+		uart_putc('0' + (n / 100) % 10);
 	if (n >= 10)
 		uart_putc('0' + (n / 10) % 10);
 	uart_putc('0' + n % 10);
