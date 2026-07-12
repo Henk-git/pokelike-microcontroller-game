@@ -8,6 +8,8 @@ AVRDUDE = avrdude
 SRC = main.c uart.c matrix.c input.c game.c
 OBJ = $(SRC:.c=.o)
 
+PORT = $(shell ls /dev/cu.usbmodem* 2>/dev/null | head -n1)
+
 all: main.hex
 
 %.o: %.c
@@ -20,7 +22,7 @@ main.hex: main.elf
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
 flash: main.hex
-	$(AVRDUDE) -p m328p -c arduino -P /dev/cu.usbmodem11101 -b 115200 -U flash:w:main.hex
+	$(AVRDUDE) -p m328p -c arduino -P $(PORT) -b 115200 -U flash:w:main.hex
 
 clean:
 	rm -f $(OBJ) main.elf main.hex
